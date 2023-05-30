@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.example.api.Network.Photo
 import com.squareup.picasso.Picasso
 
@@ -30,7 +31,7 @@ class PhotosAdapter(private val context: Context, private val photos: List<Photo
         val view = convertView ?: inflater.inflate(R.layout.each_image, parent, false)
 
         val imageView = view.findViewById<ImageView>(R.id.imageView)
-        Picasso.get().load(photo.url_s).into(imageView)
+        Glide.with(context).load(photo.url_s).into(imageView);
 
         return view
     }
