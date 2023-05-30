@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.module.AppGlideModule
 import com.example.api.Network.Photo
 import com.squareup.picasso.Picasso
 
@@ -25,14 +28,26 @@ class PhotosAdapter(private val context: Context, private val photos: List<Photo
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val photo = getItem(position) as Photo
+        val photo = photos[position]
+        val view: View
 
-        val inflater = LayoutInflater.from(context)
-        val view = convertView ?: inflater.inflate(R.layout.each_image, parent, false)
+        if (convertView == null) {
+            val inflater =
+                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            view = inflater.inflate(R.layout.each_image, null)
+        } else {
+            view = convertView
+        }
 
         val imageView = view.findViewById<ImageView>(R.id.imageView)
-        Glide.with(context).load(photo.url_s).into(imageView);
+
+        // Load image using Glide
+        Picasso.get().load(photo.url_s).into(imageView)
+
 
         return view
     }
+
 }
+
+
